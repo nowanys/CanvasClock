@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="digit.js"></script>
+</head>
+<body>
+<div style="position: relative; margin: 0 auto;width: 1300px;height: 768px">
+    <canvas  width="1300" height="768" id="layer1"
+            style=" position: absolute; z-index: 0;border: 2px black dashed;"></canvas>
+    <canvas  width="1300" height="768" id="layer2"
+            style="position: absolute; left: 0; top: 0; z-index: 1;border: 2px black dashed;"></canvas>
+</div>
+
+    <script>
+        var canvas = document.getElementById('layer1');
+        var canvas2 = document.getElementById('layer2');
+        var context = canvas.getContext('2d');
+        var context2 = canvas2.getContext('2d');
+        var colors = ["#33B5E5","#0099CC","#AA66CC","#9933CC","#99CC00","#669900","#FFBB33","#FF8800","#FF4444","#CC0000"];
+
+        var hour = 24;
+        var min = 20;
+        var sec = 10;
+
+        var balls = [];
+
+        /*
+         *  根据x,y,r绘制圆形
+         */
+        function drawCircle(ctx,x,y,r,color){
+            if(!color){
+                color = "rgb(0,102,153)";
+            }
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x,y,r,0,2*Math.PI);
+
+            ctx.closePath();
+            ctx.fill();
+
+        }
+
+        /*
+         *  根据数字矩阵绘制数字
+         *  构建了一个私有变量_idx，来检测是否跟上次的数字相同，如果不同就重绘并且加入新的小球
+         */
+        function drawNum(){
+            var _idx ;
+            return function(ctx,idx,left,top){
+                if(idx != _idx){
+                    var num = digit[idx];
+                    context.clearRect(left-8,top-8,num[0].length*20-4, num.length*20-4);
+                    for(var i=0; i<num[0].length;i++){
+                        for(var j=0;j<num.length;j++){
+                            if(num[j][i] == 1){
+                                drawCircle(ctx,left+i*20,top+j*20,8);
+                                balls.push({
+                                    left:left+i*20,
+                                    top:top+j*20,
+                                    vx:Math.pow( -1 , Math.ceil( Math.random()*1000 ) ) * 4,
+                                    vy:-5,
+                                    g:1.5+Math.random(),
+                                    color:colors[ Math.floor( Math.random()*colors.length ) ]
+                                });
+                            }
+                        }
+                    }
+                    _idx = idx;
+                }
+            };
+        }
+
+        /*
+         *  绘制时钟
+         */
+        function showClock(){
+            var left = 100;
+            var right= 100;
+            var hour1 = drawNum();
+            var hour2 = drawNum();
+            var maohao1 = drawNum();
+            var min1 = drawNum();
+            var min2 = drawNum();
+            var maohao2 = drawNum();
+            var sec1 = drawNum();
+            var sec2 = drawNum();
+
+            return function(){
+                hour1(context,Math.floor(hour/10),left,right);
+                hour2(context,Math.floor(hour%10),left+160,right);
+                maohao1(context,10,left+320,right);
+                min1(context,Math.floor(min/10),left+420,right);
+                min2(context,Math.floor(min%10),left+580,right);
+                maohao2(context,10,left+740,right);
+                sec1(context,Math.floor(sec/10),left+840,right);
+                sec2(context,Math.floor(sec%10),left+1000,right);
+            };
+
+        }
+
+        function throwBall(){
+            for(var i=0;i<balls.length;i++){
+                balls[i].left += balls[i].vx;
+                balls[i].top += balls[i].vy;
+                balls[i].vy += balls[i].g;
+                if(balls[i].top>760){
+                    balls[i].top = 760;
+                    balls[i].vy = -balls[i].vy * 0.5;
+/*                    if(Math.abs(balls[i].vy)<8){
+                        balls[i].vy = 0;
+                    }*/
+                }
+
+                drawCircle(context2,balls[i].left,balls[i].top,8,balls[i].color);
+            }
+        }
+
+        /*
+         * 更新时间
+         */
+
+        var s =showClock();
+        function update(){
+            var date = new Date();
+            hour = date.getHours();
+            min  = date.getMinutes();
+            sec = date.getSeconds();
+            context2.clearRect(0,0,1300, 768);
+            s();
+            throwBall();
+            while( balls.length > 500 ){
+                balls.shift();
+            }
+        }
+
+        (function(){
+            setInterval(update,50);
+            context.font = "50px Microsoft YaHei,SimSun,Arial";
+            context.fillText("炫丽时钟效果，改编自慕课网",100,400);
+            context.fillText("—by xiaoqqchen",150,450);
+        })();
+
+    </script>
+</body>
+</html>
