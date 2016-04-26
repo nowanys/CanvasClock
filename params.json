@@ -1,0 +1,6 @@
+{
+  "name": "Canvasclock",
+  "tagline": "炫丽的时钟效果",
+  "body": "![](示例.png)\r\n\r\n# 炫丽的时钟效果\r\n\r\n### 改编自[慕课网-炫丽的倒计时效果Canvas绘图与动画基础](http://www.imooc.com/learn/133)\r\n* 使用了两个canvas来分别绘制时钟和跳动的小球;\r\n```html\r\n <canvas  width=\"1300\" height=\"768\" id=\"layer1\"\r\n         style=\" position: absolute; z-index: 0;border: 2px black dashed;\"></canvas>\r\n <canvas  width=\"1300\" height=\"768\" id=\"layer2\"\r\n         style=\"position: absolute; left: 0; top: 0; z-index: 1;border: 2px black dashed;\"></canvas>\r\n```\r\n* 在`drawNum()`函数中使用了闭包来封装私有变量idx，从而实现了局部重绘，并且减少了代码量。\r\n```javascript\r\n function drawNum(){\r\n      var _idx ;\r\n      return function(ctx,idx,left,top){\r\n          if(idx != _idx){\r\n          ...\r\n           _idx = idx;\r\n          }\r\n      };\r\n  }\r\n```\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

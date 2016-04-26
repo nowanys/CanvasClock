@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Canvasclock : 炫丽的时钟效果">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Canvasclock</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/xiaoqqchen/CanvasClock">View on GitHub</a>
+
+          <h1 id="project_title">Canvasclock</h1>
+          <h2 id="project_tagline">炫丽的时钟效果</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/xiaoqqchen/CanvasClock/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/xiaoqqchen/CanvasClock/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><img src="%E7%A4%BA%E4%BE%8B.png" alt=""></p>
+
+<h1>
+<a id="炫丽的时钟效果" class="anchor" href="#%E7%82%AB%E4%B8%BD%E7%9A%84%E6%97%B6%E9%92%9F%E6%95%88%E6%9E%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>炫丽的时钟效果</h1>
+
+<h3>
+<a id="改编自慕课网-炫丽的倒计时效果canvas绘图与动画基础" class="anchor" href="#%E6%94%B9%E7%BC%96%E8%87%AA%E6%85%95%E8%AF%BE%E7%BD%91-%E7%82%AB%E4%B8%BD%E7%9A%84%E5%80%92%E8%AE%A1%E6%97%B6%E6%95%88%E6%9E%9Ccanvas%E7%BB%98%E5%9B%BE%E4%B8%8E%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>改编自<a href="http://www.imooc.com/learn/133">慕课网-炫丽的倒计时效果Canvas绘图与动画基础</a>
+</h3>
+
+<ul>
+<li>使用了两个canvas来分别绘制时钟和跳动的小球;</li>
+</ul>
+
+<div class="highlight highlight-text-html-basic"><pre> &lt;<span class="pl-ent">canvas</span>  <span class="pl-e">width</span>=<span class="pl-s"><span class="pl-pds">"</span>1300<span class="pl-pds">"</span></span> <span class="pl-e">height</span>=<span class="pl-s"><span class="pl-pds">"</span>768<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>layer1<span class="pl-pds">"</span></span>
+         <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span> position: absolute; z-index: 0;border: 2px black dashed;<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">canvas</span>&gt;
+ &lt;<span class="pl-ent">canvas</span>  <span class="pl-e">width</span>=<span class="pl-s"><span class="pl-pds">"</span>1300<span class="pl-pds">"</span></span> <span class="pl-e">height</span>=<span class="pl-s"><span class="pl-pds">"</span>768<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>layer2<span class="pl-pds">"</span></span>
+         <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span>position: absolute; left: 0; top: 0; z-index: 1;border: 2px black dashed;<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">canvas</span>&gt;</pre></div>
+
+<ul>
+<li>在<code>drawNum()</code>函数中使用了闭包来封装私有变量idx，从而实现了局部重绘，并且减少了代码量。</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre> <span class="pl-k">function</span> <span class="pl-en">drawNum</span>(){
+      <span class="pl-k">var</span> _idx ;
+      <span class="pl-k">return</span> <span class="pl-k">function</span>(<span class="pl-smi">ctx</span>,<span class="pl-smi">idx</span>,<span class="pl-smi">left</span>,<span class="pl-smi">top</span>){
+          <span class="pl-k">if</span>(idx <span class="pl-k">!=</span> _idx){
+          <span class="pl-k">...</span>
+           _idx <span class="pl-k">=</span> idx;
+          }
+      };
+  }</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Canvasclock maintained by <a href="https://github.com/xiaoqqchen">xiaoqqchen</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
